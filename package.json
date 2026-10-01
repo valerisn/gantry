@@ -10,6 +10,7 @@
     "build": "npm run typecheck && electron-vite build",
     "start": "electron-vite preview",
     "typecheck": "tsc --noEmit",
+    "format": "prettier --write src tests scripts electron.vite.config.ts",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "package": "npm run build && electron-builder --win dir portable",
     "postinstall": "node scripts/check-native.cjs"
@@ -31,6 +32,7 @@
     "electron-builder": "26.15.3",
     "electron-vite": "5.0.0",
     "playwright": "1.63.0",
+    "prettier": "3.8.5",
     "typescript": "5.9.3",
     "vite": "7.3.6"
   },
@@ -38,10 +40,26 @@
     "appId": "dev.valerisn.gantry",
     "npmRebuild": false,
     "productName": "Gantry",
-    "directories": { "output": "release" },
-    "files": ["out/**/*", "assets/**/*", "package.json"],
-    "asarUnpack": ["node_modules/node-pty/**/*"],
-    "win": { "target": ["portable"], "icon": "assets/logo.png", "signAndEditExecutable": false },
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/node-pty/**/*"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "assets/logo.png"
+    },
     "artifactName": "Gantry-${version}-${arch}.${ext}"
+  },
+  "overrides": {
+    "dompurify": "3.4.16"
   }
 }

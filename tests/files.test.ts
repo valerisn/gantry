@@ -35,6 +35,11 @@ test('file authorization, UTF-8 preservation and conflicting saves', async () =>
     const newFile = await files.grantSavePath(path.join(root, 'save-as.txt'))
     assert.ok(await files.write(newFile, 'new document', null))
     assert.equal((await files.read(newFile)).content, 'new document')
-    assert.equal((await fs.readdir(project)).some(name => name.includes('.gantry-')), false)
-  } finally { await fs.rm(root, { recursive: true, force: true }) }
+    assert.equal(
+      (await fs.readdir(project)).some((name) => name.includes('.gantry-')),
+      false,
+    )
+  } finally {
+    await fs.rm(root, { recursive: true, force: true })
+  }
 })

@@ -1,9 +1,39 @@
-export interface Entry { name: string; path: string; directory: boolean }
-export interface DiskFile { path: string; content: string; revision: string }
-export interface DocumentState extends DiskFile { id: string; saved: string }
-export interface Preferences { fontSize: number; wordWrap: boolean; indexWidth: number; trayHeight: number; indexVisible: boolean; trayVisible: boolean }
-export interface Session { project: string | null; documents: DocumentState[]; active: string | null; preferences: Preferences; recent: string[]; tasks: Record<string, { build: string; run: string }> }
-export interface ProcessEvent { type: 'terminal' | 'task'; data?: string; exitCode?: number; label?: string }
+export interface Entry {
+  name: string
+  path: string
+  directory: boolean
+}
+export interface DiskFile {
+  path: string
+  content: string
+  revision: string
+}
+export interface DocumentState extends DiskFile {
+  id: string
+  saved: string
+}
+export interface Preferences {
+  fontSize: number
+  wordWrap: boolean
+  indexWidth: number
+  trayHeight: number
+  indexVisible: boolean
+  trayVisible: boolean
+}
+export interface Session {
+  project: string | null
+  documents: DocumentState[]
+  active: string | null
+  preferences: Preferences
+  recent: string[]
+  tasks: Record<string, { build: string; run: string }>
+}
+export interface ProcessEvent {
+  type: 'terminal' | 'task'
+  data?: string
+  exitCode?: number
+  label?: string
+}
 export type SaveResult = { status: 'saved'; file: DiskFile } | { status: 'cancelled' | 'conflict' }
 export interface Bridge {
   restore(): Promise<Session>
@@ -24,4 +54,11 @@ export interface Bridge {
   onProcess(callback: (event: ProcessEvent) => void): () => void
   onClose(callback: () => void): () => void
 }
-export const defaultPreferences: Preferences = { fontSize: 14, wordWrap: false, indexWidth: 300, trayHeight: 205, indexVisible: true, trayVisible: true }
+export const defaultPreferences: Preferences = {
+  fontSize: 14,
+  wordWrap: false,
+  indexWidth: 300,
+  trayHeight: 205,
+  indexVisible: true,
+  trayVisible: true,
+}
