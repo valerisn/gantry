@@ -21,7 +21,7 @@ const developmentURL = process.env.ELECTRON_RENDERER_URL
 
 function handle(name: string, action: (...args: any[]) => unknown): void {
   ipcMain.handle(name, (event, ...args) => {
-    const expected = developmentURL || pathToFileURL(page).href
+    const expected = developmentURL ? new URL(developmentURL).href : pathToFileURL(page).href
     if (
       event.sender !== window.webContents ||
       event.senderFrame !== window.webContents.mainFrame ||
@@ -87,8 +87,8 @@ app.whenReady().then(async () => {
       throw new Error('Session project does not match the open folder')
     if (value.documents.some((doc) => doc.path && !files.documents.has(doc.path)))
       throw new Error('Session contains an unopened file')
-    session = value
     await store.save(value)
+    session = value
   })
   handle('project:choose', async (recent) => {
     let folder: string | undefined
